@@ -1,0 +1,13 @@
+/* Estilos para o corpo da página e container */
+body {
+    background-color: #E3E7E8;
+    font-family: system-ui;
+}
+
+.container {
+    width: 1000px;
+    margin: auto;
+    transition: 0.5s;
+}
+
+/* ... (estilos para o resto da página) */
