@@ -1,23 +1,43 @@
-// Dentro da seção <script> no final do arquivo HTML
-
-// Função para buscar e exibir a lista de ingredientes
-async function fetchIngredients() {
-    try {
-        const response = await fetch('http://127.0.0.1:5000/api/ingredients');
-        const data = await response.json();
-
-        const ingredientList = document.getElementById('ingredient-list');
-        ingredientList.innerHTML = ''; // Limpar conteúdo anterior
-
-        data.forEach(ingredient => {
-            const li = document.createElement('li');
-            li.textContent = ingredient.name;
-            ingredientList.appendChild(li);
-        });
-    } catch (error) {
-        console.error('Erro ao buscar ingredientes:', error);
-    }
+// Função para carregar o cardápio do servidor
+function loadMenu() {
+    fetch('/api/cardapio')
+        .then(response => response.json())
+        .then(menu => {
+            // Atualizar a interface com os itens do cardápio
+            // Exemplo: criar elementos HTML para exibir cada item
+        })
+        .catch(error => console.error('Erro ao carregar o cardápio:', error));
 }
 
-// Chamar a função para buscar e exibir ingredientes quando a página carrega
-window.onload = fetchIngredients;
+// Função para adicionar um item ao carrinho
+function addToCart(itemId) {
+    // Enviar solicitação POST para adicionar o item ao carrinho
+    // Atualizar a interface do carrinho
+}
+
+// Função para fazer login
+function login(username, password) {
+    // Enviar solicitação POST para autenticar usuário
+    // Armazenar o token JWT recebido
+}
+
+// Função para processar um pedido
+function processOrder(orderData) {
+    // Enviar solicitação POST para processar o pedido
+    // Atualizar a interface com mensagem de sucesso ou erro
+}
+
+// Função para carregar a lista de pedidos
+function loadOrders() {
+    // Enviar solicitação GET para obter a lista de pedidos
+    // Atualizar a interface com os pedidos recebidos
+}
+
+// Função para exibir detalhes de um pedido específico
+function showOrderDetails(orderId) {
+    // Enviar solicitação GET para obter detalhes do pedido
+    // Atualizar a interface com os detalhes recebidos
+}
+
+// Chamar a função de carregar o menu quando a página carregar
+window.onload = loadMenu;

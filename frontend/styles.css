@@ -1,13 +1,16 @@
-/* Estilos para o corpo da página e container */
 body {
-    background-color: #E3E7E8;
-    font-family: system-ui;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.container {
-    width: 1000px;
-    margin: auto;
-    transition: 0.5s;
+h1 {
+    text-align: center;
+    margin: 20px 0;
 }
 
-/* ... (estilos para o resto da página) */
+#menu, #cart, #login-form, #orders, #order-details {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+}

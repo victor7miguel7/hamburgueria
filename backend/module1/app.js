@@ -1,14 +1,16 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const app = express();
 const PORT = 3000;
+const SECRET_KEY = 'senhatoken';
 
 app.use(express.json());
 
 // Rota para verificar se o servidor está funcionando
-app.get('/', (req, res) => {
-    res.send('Servidor está funcionando!');
-});
-
+//app.get('/', (req, res) => {
+//    res.send('Servidor está funcionando!');
+//});
+/*
 // Rota para receber pedidos via POST
 app.post('/api/orders', (req, res) => {
     const orderData = req.body;
@@ -19,40 +21,41 @@ app.post('/api/orders', (req, res) => {
 
     res.json({ orderId: orderId, message: 'Pedido recebido com sucesso!' });
 });
-
+*/
 
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
-/*
-let openShopping = document.querySelector('.shopping');
-let closeShopping = document.querySelector('.closeShopping');
-let body = document.querySelector('body');
 
-openShopping.addEventListener('click', () => {
-    body.classList.add('active');
+app.post('/api/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // Verificar as credenciais (simplificado, não recomendado para produção)
+    if (username === 'usuario' && password === 'senha') {
+        const token = jwt.sign({ username }, SECRET_KEY);
+        res.json({ token });
+    } else {
+        res.status(401).json({ message: 'Credenciais inválidas' });
+    }
 });
 
-closeShopping.addEventListener('click', () => {
-    body.classList.remove('active');
+app.post('/api/orders', verifyToken, (req, res) => {
+    // Resto do seu código para lidar com os pedidos...
 });
 
-// Produtos (já estão no seu código)
-// Funções (já estão no seu código)
+function verifyToken(req, res, next) {
+    const token = req.headers.authorization;
 
-function initApp() {
-    products.forEach((value, key) => {
-        let newDiv = document.createElement('div');
-        newDiv.classList.add('item');
-        newDiv.innerHTML = `
-            <img src="image/${value.image}">
-            <div class="title">${value.name}</div>
-            <div class="price">${value.price.toLocaleString()}</div>
-            <button onclick="addToCard(${key})">Adiciona ao Carrinho</button>`;
-        list.appendChild(newDiv);
+    if (!token) {
+        return res.status(401).json({ message: 'Token não fornecido' });
+    }
+
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ message: 'Token inválido' });
+        }
+        req.username = decoded.username;
+        next();
     });
 }
-
-initApp();*/
-
